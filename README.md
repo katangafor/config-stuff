@@ -84,3 +84,66 @@ if status is-interactive
 end
 
 ```
+
+# helix 
+config.toml (`~/.config/helix/config.toml`)
+```
+theme = "dark_plus"
+
+[editor]
+line-number = "relative"
+# Minimum severity to show a diagnostic after the end of a line:
+# enable this and the other one for inline diagnostics which I don't rly need but they're cool so maybe later
+# end-of-line-diagnostics = "hint"
+
+[editor.inline-diagnostics]
+# Minimum severity to show a diagnostic on the primary cursor's line.
+# cursor-line = "error"
+
+[keys.normal.backspace]
+t = [":sh cargo test -- --nocapture"]
+s = [":w", ":config-reload", ":format"]
+r = [":sh cargo run"]
+c = [":w", ":config-open"]
+y = [":clipboard-yank"]
+
+# idk if I really need thesse
+D = ["goto_first_nonwhitespace", "extend_to_line_end"]
+d = ["goto_first_nonwhitespace", "extend_to_line_end", "normal_mode"]
+
+b = [":echo %sh{git blame -L %{cursor_line},+1 %{buffer_name}}"]
+
+
+[keys.insert]
+up = "no_op"
+down = "no_op"
+left = "no_op"
+right = "no_op"
+```
+
+languages.toml (`~/.config/helix/languages.toml`)
+```
+[[language]]
+name = "typescript"
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "tsx"
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "elixir"
+scope = "source.elixir"
+injection-regex = "elixir"
+file-types = ["ex", "exs"]
+roots = ["mix.exs"]
+auto-format = true
+diagnostic-severity = "hint"
+comment-token = "#"
+indent = {tab-width = 2, unit = " "}
+language-servers = [ "elixir-ls" ]
+
+
+```
